@@ -23,6 +23,7 @@ export interface WorkspaceScaleStore {
 }
 
 function clampLevel(level: number): ScaleLevel {
+    if (!Number.isFinite(level)) return DEFAULT_SCALE_LEVEL;
     return Math.min(Math.max(Math.round(level), MIN_SCALE_LEVEL), MAX_SCALE_LEVEL) as ScaleLevel;
 }
 

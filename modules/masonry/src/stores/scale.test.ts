@@ -43,6 +43,20 @@ describe('useWorkspaceScaleStore', () => {
         expect(useWorkspaceScaleStore.getState().level).toBe(MIN_SCALE_LEVEL);
     });
 
+    it('setLevel falls back to default scale level when passed non-finite values', () => {
+        useWorkspaceScaleStore.getState().setLevel(MAX_SCALE_LEVEL);
+        expect(useWorkspaceScaleStore.getState().level).toBe(MAX_SCALE_LEVEL);
+
+        useWorkspaceScaleStore.getState().setLevel(NaN);
+        expect(useWorkspaceScaleStore.getState().level).toBe(DEFAULT_SCALE_LEVEL);
+
+        useWorkspaceScaleStore.getState().setLevel(Infinity);
+        expect(useWorkspaceScaleStore.getState().level).toBe(DEFAULT_SCALE_LEVEL);
+
+        useWorkspaceScaleStore.getState().setLevel(-Infinity);
+        expect(useWorkspaceScaleStore.getState().level).toBe(DEFAULT_SCALE_LEVEL);
+    });
+
     it('zoomIn and zoomOut step one level from the default', () => {
         useWorkspaceScaleStore.getState().zoomIn();
         expect(useWorkspaceScaleStore.getState().level).toBe(DEFAULT_SCALE_LEVEL + 1);
